@@ -3,7 +3,15 @@
 That is a sample class to show how to connect sqlite by java or kotlin!!
 
 ```kotlin
-class SqLiteConnector(var tableName:String) {
+package com.orange.dataserver.util
+
+import java.io.File
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.ResultSet
+import java.sql.Statement
+
+class SqLiteConnector(var root:String) {
     var conn: Connection
     var stmt: Statement
     init {
@@ -12,7 +20,7 @@ class SqLiteConnector(var tableName:String) {
         if(!file.exists()){
             file.mkdir()
         }
-        val dbRout=File("chatRout/${tableName}.db")
+        val dbRout= File(root)
         if(!dbRout.exists()){
             dbRout.createNewFile()
         }
@@ -41,6 +49,11 @@ fun String.sqLiteQuery(tableName: String,callback: callback){
     }
     a.close()
 }
+
+interface callback {
+    fun callback(rs: ResultSet)
+}
+
 
 
 ```
