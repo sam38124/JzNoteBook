@@ -1,73 +1,130 @@
-# How to sign in facebook with android
+[![](https://jitpack.io/v/sam38124/JzFrameWork.svg)](https://jitpack.io/#sam38124/JzFrameWork)
+[![Platform](https://img.shields.io/badge/platform-%20Android%20-brightgreen.svg)](https://github.com/sam38124)
+[![characteristic](https://img.shields.io/badge/特點-%20輕量級%20%7C%20簡單易用%20%20%7C%20穩定%20-brightgreen.svg)](https://github.com/sam38124)
+# Glitter
+#### This is the h5 hybrid development framework, which allows you to achieve cross-platform development of android, ios, and web, which allows you to greatly shorten the development time and retain the scalability of native development~
 
-### 1.In gradle
+## Create by
+<p align="center"><img width = "500"  src="https://github.com/sam38124/JzFrameWork/blob/master/App%20icon/squarestudio.png?raw=tru"><a name="Use"></a></p>
+
+## `List`
+* [Configuration](#Import)
+* [Quick Start](#Use)
+* [Add your own script bridge](#All)
+* [About me](#About)
+
+<a name="Import"></a>
+## `Configuration`
+
+### `Android`
+
+
+> Support jcenter。 <br/>
+
+#### 1.Add  into your build.gradle 
 ```kotlin
- implementation 'com.facebook.android:facebook-login:5.15.3'
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
 ```
-### 2.In Manifest
-@string/facebook_app_id is your Application Id what you register on facebook!!
-``` kotlin
-  <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="T-sport" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+#### 2.Add into your dependencies
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
-
+```kotlin
+dependencies {
+implementation 'com.github.sam38124: Glitter:1.0.0'}
 ```
-### 3.Set Initialize
 
-``` kotlin
-FacebookSdk.sdkInitialize(applicationContext)
+#### 3.Display the glitter page use by fragment
+
+```kotlin
+GlitterPage(PublicBeans.fileRoot+"MainActivity.html","MainActivity"),"MainActivity")
+//is Fragment
 ```
-### 4.In fragement
 
-``` kotlin
-//First step
-private var callbackManager: CallbackManager=CallbackManager.Factory.create()
-//Second step
-  LoginManager.getInstance().registerCallback(callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    val profile = Profile.getCurrentProfile()
-                    var photo="https://graph.facebook.com/v3.3/${profile.id}/picture?height=300&width=300&migration_overrides=%7Boctober_2012%3Atrue%7D"
-                    val id = "fb"+profile.id
-                    val name = profile.name
-                    Log.e("fb登入","登入成功")
-                    handler.post { JzActivity.getControlInstance().toast("登入成功") }
-                }
+### `IOS`
 
-                override fun onCancel() {
-                    Log.e("fb登入","取消登入")
-                    handler.post { JzActivity.getControlInstance().toast("取消登入") }
-                }
+> Support swiftPackage <br/>
 
-                override fun onError(exception: FacebookException) {
-                    Log.e("fb登入","登入失敗->${exception.message}")
-                    handler.post { JzActivity.getControlInstance().toast("登入失敗"+exception.message) }
+### `Web`
 
-                }
-            })
-//Third step
- override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
+```javascript
+ <script src="Glitter.js"></script> 
+```
+
+<a name="Use"></a>
+## Quick Start
+
+### 1.Set up your glitter root page like below (necessary)
+```html
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        overflow-y: hidden;
+        width: 100vw;
+        height: 100vh;
+        overflow-x: hidden;
+        white-space: nowrap;
     }
-//Fourth step
-LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
+    iframe{
+        width: 100vw;
+        height: 100vh;
+        border-width: 0;
+        padding: 0;
+        margin: 0;
+        white-space: nowrap;
+        position: fixed;
+    }
+    html{
+        white-space: nowrap;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<script src="Glitter.js"></script>
+<script src="jslib/jquery.js"></script>
+<body>
 
+</body>
+</html>
+
+<script>
+    //set appear type
+    glitter.type=appearType.Web
+    //Set up your first page
+    glitter.setHome('Page/Page_Sign_In.html','Page_Sign_In','{}')
+</script>
 ```
+
+<a name="All"></a>
+## Add your own script bridge
+### Android
+```kotlin
+GlitterPage.addJsInterFace(arrayOf(JsInterFace(sampleClass(),"tagname"))
+```
+<a name="About"></a>
+# About me
+#### <font color="#0000dd"> Work for: </font><br /> 
++ ##### <font color="#660000">【Orange Electronic】橙的電子-Deputy Head of R&D </font><br /> 
++ ##### <font color="#660000">【Square Studio】四方工作室-CEO </font><br />
+#### <font color="#0000dd"> Main skill: </font><br /> 
++ ##### Full stack development(Kotlin,Java,Swift,Javascript,Objective-C,C#)
++ ##### Android and IOS(4 years)<br/>  
++ ##### Jsp(2 years)<br/> 
++ ##### Javascript and Jquery and Ktor(1 years)<br /> 
+#### <font color="#0000dd"> Contact information: </font><br /> 
++  ##### line:sam38124<br /> 
+
++  ##### gmail:sam38124@gmail.com
+

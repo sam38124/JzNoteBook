@@ -1,0 +1,76 @@
+{
+  "name": "@hydecorp/drawer",
+  "version": "1.0.0-alpha.9",
+  "description": "A touch-enabled drawer component for the modern web",
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "files": [
+    "src",
+    "lib",
+    "module",
+    "tsconfig.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "test": "exit 0",
+    "build:tsc": "tsc -d --outDir lib",
+    "watch:tsc": "tsc -d --outDir lib -w",
+    "build:rollup": "rollup -c",
+    "watch:rollup": "rollup -c -w",
+    "build": "npm run build:tsc & npm run build:rollup & wait",
+    "watch": "npm run watch:tsc & npm run watch:rollup",
+    "dev": "npm run watch & http-server -p 3337",
+    "preversion": "sed -i '' -E 's:^(lib|docs/assets/hy-\\*)$:#<removed temporarily>\\1:' .gitignore",
+    "version": "npm run build && git add .",
+    "postversion": "sed -i '' -E 's:^#<removed temporarily>(lib|docs/assets/hy-\\*)$:\\1:' .gitignore && git rm --cached -r lib docs/assets/hy-* && git add . && git commit -m 'Restore preversion .gitignore'",
+    "prepack": "npm run clean && npm run build"
+  },
+  "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "rollup": "^2.32.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "@hydecorp/component": "^1.0.0-alpha.5",
+    "lit-element": "^2.4.0",
+    "lit-html": "^1.3.0",
+    "rxjs": "^7.0.0-beta.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hydecorp/drawer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hydecorp/drawer/issues"
+  },
+  "homepage": "https://hydecorp.github.io/drawer/",
+  "tags": [
+    "drawer",
+    "touch-events",
+    "swipe-gestures",
+    "webcomponent",
+    "jquery",
+    "rxjs",
+    "hydejack",
+    "jquery-plugin",
+    "vanilla-js",
+    "drawer-layout",
+    "custom-element",
+    "vanilla",
+    "web-components",
+    "ui-component",
+    "reactive",
+    "menu",
+    "menu-navigation"
+  ]
+}
