@@ -39,5 +39,5 @@
                 LoginManager.getInstance().logInWithReadPermissions(act, listOf("public_profile"));
             }
         })
-        
+        //添加方法
           implementation 'com.facebook.android:facebook-android-sdk:8.1.0'
