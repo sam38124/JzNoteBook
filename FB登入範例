@@ -1,0 +1,43 @@
+//FB登入接口
+        GlitterActivity.addJavacScriptInterFace(JavaScriptInterFace("SignInFaceBook"){
+            request->
+            handler.post {
+                val act=GlitterActivity.instance()
+                FacebookSdk.setApplicationId("4007311309376940")
+                FacebookSdk.sdkInitialize(act)
+                val callbackManager=CallbackManager.Factory.create();
+                val callback=object :ResultCallBack{
+                    override fun resultBack(requestCode: Int, resultCode: Int, data: Intent?) {
+                        callbackManager.onActivityResult(requestCode,resultCode,data)
+                    }
+                }
+                GlitterActivity.addActivityResult(callback)
+                LoginManager.getInstance().registerCallback(callbackManager,
+                    object : FacebookCallback<LoginResult> {
+                        override fun onSuccess(loginResult: LoginResult) {
+                            GlitterActivity.activityResultList.remove(callback)
+                            request.responseValue["id"]=Profile.getCurrentProfile().id
+                            request.responseValue["result"]="success"
+                            request.finish()
+                            Log.e("loginResult","onSuccess")
+                        }
+
+                        override fun onCancel() {
+                            GlitterActivity.activityResultList.remove(callback)
+                            request.responseValue["result"]="cancel"
+                            request.finish()
+                            Log.e("loginResult","cancel")
+                        }
+
+                        override fun onError(exception: FacebookException) {
+                            GlitterActivity.activityResultList.remove(callback)
+                            request.responseValue["result"]=exception.message.toString()
+                            request.finish()
+                            exception.printStackTrace()
+                        }
+                    })
+                LoginManager.getInstance().logInWithReadPermissions(act, listOf("public_profile"));
+            }
+        })
+        
+          implementation 'com.facebook.android:facebook-android-sdk:8.1.0'
